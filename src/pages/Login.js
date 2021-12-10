@@ -6,11 +6,12 @@ import { supabase } from "../supabaseClient";
 export default function Login() {
   const history = useNavigate();
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { loading, logInAccount } = useContext(ItemsContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    logInAccount(email);
+    logInAccount(email, password);
   };
 
   useEffect(() => {
@@ -44,6 +45,17 @@ export default function Login() {
                   />
                   <div className="form-text">
                     Enter your email to get your magic link
+                  </div>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    name="password"
+                    required
+                    className="form-control form-control-lg w-100 mt-1"
+                  />
+                  <div className="form-text">
+                    or Enter your password to login directly
                   </div>
                 </div>
                 <button disabled={loading} type="submit" className="btn btn-primary btn-lg w-100 ">

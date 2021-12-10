@@ -4,6 +4,8 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Settings from "./pages/Settings";
+import Video from "./pages/Video";
 import { supabase } from "./supabaseClient";
 
 function App() {
@@ -27,6 +29,8 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home/>} />
         <Route exact path="/login" element={<Login/>} />
+        <Route exact path="/video" element={<Video/>} />
+        <Route exact path="/settings" element={<Settings/>} />
       </Routes>
     </>
   );

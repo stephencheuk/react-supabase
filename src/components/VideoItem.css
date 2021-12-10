@@ -1,0 +1,10 @@
+.VideoItem{
+  padding: 4px;
+  background-color: #e0e0e0;
+  display: flex;
+}
+
+.PreviewImage img{
+  max-width: 150px;
+  max-height: 150px;
+}

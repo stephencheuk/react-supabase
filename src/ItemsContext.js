@@ -9,17 +9,19 @@ export function ItemsContextProvider({ children }) {
   const [inactiveItems, setInactiveItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [adding, setAdding] = useState(false);
+  const [updating, setUpdating] = useState(false);
 
   // Authentication function for logging in new/old user with supabase magic link
-  const logInAccount = async (email) => {
+  const logInAccount = async (email, password) => {
     setLoading(true);
     try {
+
       // supabase method to send the magic link to the email provided
-      const { error } = await supabase.auth.signIn({ email });
+      const { error } = await supabase.auth.signIn({ email, password });
 
       if (error) throw error; //check if there was an error fetching the data and move the execution to the catch block
 
-      alert("Check your email for your magic login link!");
+      if(!password) alert("Check your email for your magic login link!");
 
     } catch (error) {
       alert(error.error_description || error.message);
@@ -109,6 +111,24 @@ export function ItemsContextProvider({ children }) {
       await getActiveItems(); //get the new active items list
     } catch (error) {
       alert(error.error_description || error.message);
+    }
+  };
+
+  // Update User Password
+  const updatePassword = async (password) => {
+    setUpdating(true);
+    try {
+
+      const { user, error } = await supabase.auth.update({password});
+
+      console.log(user);
+
+      if (error) throw error;
+
+    } catch (error) {
+      alert(error.error_description || error.message);
+    } finally {
+      setUpdating(false);
     }
   };
 
@@ -207,8 +227,10 @@ export function ItemsContextProvider({ children }) {
         inactiveItems,
         loading,
         adding,
+        updating,
         logInAccount,
         logOutAccount,
+        updatePassword,
         getActiveItems,
         getInactiveItems,
         deleteItem,
